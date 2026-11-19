@@ -2120,8 +2120,11 @@ ul,ol{list-style:none}
     const el = document.querySelector("[data-live=total]");
     if (!el) return;
     const wrap = el.closest(".home-balance") || el.parentElement;
-    const max = wrap ? wrap.clientWidth : 0;
-    if (!max) return;
+    if (!wrap) return;
+    const cs = getComputedStyle(wrap);
+    const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    const max = wrap.clientWidth - pad;
+    if (max <= 0) return;
     el.style.whiteSpace = "nowrap";
     el.style.display = "inline-block";
     el.style.width = "max-content";
