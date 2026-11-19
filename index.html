@@ -303,8 +303,9 @@ ul,ol{list-style:none}
   color:var(--text);
   font-variant-numeric:tabular-nums;
   white-space:nowrap;
-  max-width:100%;
-  overflow:hidden;
+  display:inline-block;
+  width:max-content;
+  max-width:none;
 }
 .today{
   margin-top:6px;
@@ -2118,13 +2119,15 @@ ul,ol{list-style:none}
   function fitBalance() {
     const el = document.querySelector("[data-live=total]");
     if (!el) return;
-    el.style.fontSize = "";
     const wrap = el.closest(".home-balance") || el.parentElement;
     const max = wrap ? wrap.clientWidth : 0;
     if (!max) return;
-    let size = parseFloat(getComputedStyle(el).fontSize) || 56;
     el.style.whiteSpace = "nowrap";
-    while (el.scrollWidth > max && size > 22) {
+    el.style.display = "inline-block";
+    el.style.width = "max-content";
+    let size = 56;
+    el.style.fontSize = size + "px";
+    while (el.scrollWidth > max - 2 && size > 22) {
       size -= 0.5;
       el.style.fontSize = size + "px";
     }
